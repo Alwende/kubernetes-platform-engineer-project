@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+    nginx.ingress.kubernetes.io/upstream-vhost: "kube-stack-grafana.monitoring.svc.cluster.local"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - grafana.local
+    secretName: grafana-tls-secret
+  rules:
+  - host: grafana.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kube-stack-grafana
+            port:
+              number: 80

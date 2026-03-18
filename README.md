@@ -1,82 +1,13 @@
-# Kubernetes Platform Engineering Project: Secure Multi-Container Architecture
+# 🚀 Enterprise Kubernetes Platform Engineering Case Study
 
-## 🚀 Architectural Workflow
-```mermaid
-graph TD
-    A[User/Admin: Bob] -->|RBAC Auth| B(Namespace: lfs158)
-    B --> C{Service: frontend-svc}
-    C -->|Port 80| D[Container: Nginx]
-    C -->|Port 8080| E[Container: Echo-Sidecar]
-    F[ConfigMap: sidecar-config] -->|Inject Env| E
-    G[K8s Control Plane] -->|Liveness/Readiness| D
-    G -->|Liveness/Readiness| E
-    subgraph Pod [Frontend Pod Replicas x3]
-    D
-    E
-    end
-```
+## 🛠️ High-Level Architecture
+This platform utilizes a **Triple-Container Pod** pattern (Nginx + Admin Sidecar + Envoy Proxy) to provide a zero-trust, observable environment.
 
-## 🛠️ Key Architectural Features
-* **RBAC Governance:** Implemented a dedicated namespace (`lfs158`) with restricted user access (User: Bob).
-* **Multi-Container Pods:** Utilized the **Sidecar Pattern** by deploying an Nginx frontend with an Echo-Server admin sidecar.
-* **Service Discovery:** Configured a **Multi-Port LoadBalancer Service** (80/8080).
-* **Configuration Decoupling:** Used **ConfigMaps** to manage environment variables (SIDECAR_PORT).
-* **Resource Reliability:** Defined **CPU/Memory Requests & Limits** to achieve **Burstable QoS**.
+## 📂 Technical Components
+* **Service Mesh:** Istio v1.21.0 for mTLS and Canary Routing.
+* **Security:** Cert-Manager for automated TLS termination.
+* **Observability:** Full Prometheus/Grafana stack via Helm.
+* **Automation:** GitHub Actions CI/CD for manifest validation.
 
-## 📋 Infrastructure Audit (Live Snapshot)
-```json
-{
-  "host": {
-    "hostname": "localhost",
-    "ip": "127.0.0.1"
-  },
-  "environment": {
-    "HOSTNAME": "frontend-deploy-6ccd986ff9-jn24b",
-    "FRONTEND_SVC_SERVICE_HOST": "10.99.43.97",
-    "KUBERNETES_SERVICE_HOST": "10.96.0.1"
-  }
-}
-```
-
-## 🌐 Networking & Service Types
-* **LoadBalancer:** Integrated with `minikube tunnel` for external IP simulation.
-* **Port-Forwarding:** Utilized `kubectl port-forward svc/frontend-svc 8081:8080` for direct sidecar debugging.
-
-## 🏛️ Governance
-This project follows a rigorous PMBOK-aligned governance structure. Detailed objectives and success criteria are documented in the [Enterprise Project Charter](./PROJECT_CHARTER.md).
-
----
-**Project Lead:** Dan Alwende, PMP, CSPO  
-*Project Manager | Solutions Architect | Platform Engineer*
-
-## 🛡️ Security Audit & Incident Response
-* **Incident INC-001:** Identified accidental exposure of non-production metadata.
-* **Response:** Performed a repository-wide history scrub and implemented a robust `.gitignore` strategy.
-* **Compliance:** The project now utilizes localized `.gitignore` patterns to ensure zero-leakage of sensitive YAML or JSON artifacts.
-
-## 💾 Phase 2: Persistence & Security
-* **Stateful Storage:** Implemented Persistent Volumes (PV) to ensure log retention across pod lifecycles.
-* **Secrets Management:** Migrated sensitive metadata to Kubernetes Secrets objects.
-
-## 🌐 Phase 3: Ingress & Domain Routing
-* **Ingress Control:** Transitioned from Port-Forwarding to DNS-based routing via Nginx Ingress.
-* **Local DNS:** Configured `frontend.local` as the primary entry point for the standalone application.
-
-## ✅ Final Integration Verification
-The Ingress routing was successfully validated via internal cluster tunneling:
-```bash
-minikube ssh "curl -H 'Host: frontend.local' localhost"
-```
-**Result:** 200 OK - Nginx Welcome Page served via Ingress Controller.
-
-## 📈 Phase 3: Elasticity & Scaling
-* **Horizontal Pod Autoscaling:** Implemented HPA to automatically scale replicas (3-10) based on CPU utilization.
-* **Metrics Aggregation:** Enabled `metrics-server` for real-time resource monitoring.
-
-## ✅ Project Status: PHASE 2 COMPLETE
-This standalone architecture is officially verified and operational.
-
-### 🗺️ Future Roadmap (Phase 4)
-* **TLS/SSL Termination:** Implement cert-manager for HTTPS.
-* **Service Mesh:** Deploy Istio for advanced traffic management.
-* **CI/CD Integration:** Automate deployments via GitHub Actions or ArgoCD.
+## ✅ Verification
+Validated via: `curl -Iv https://frontend.local -k` (HTTP 200 OK via TLSv1.3)

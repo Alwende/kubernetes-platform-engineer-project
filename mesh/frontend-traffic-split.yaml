@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-vs
+  namespace: lfs158
+spec:
+  hosts:
+  - frontend.local
+  http:
+  - route:
+    - destination: {host: frontend-svc, subset: v1}
+      weight: 90
+    - destination: {host: frontend-svc, subset: v2}
+      weight: 10
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: frontend-dr
+  namespace: lfs158
+spec:
+  host: frontend-svc
+  subsets:
+  - name: v1
+    labels: {version: v1}
+  - name: v2
+    labels: {version: v2}

@@ -48,3 +48,6 @@ Executed direct tunnel to Sidecar for administrative audit:
 kubectl port-forward svc/frontend-svc 8081:8080 -n lfs158
 ```
 *Result: Successfully accessed JSON health data on localhost:8081.*
+
+## 🏛️ Governance
+This project is governed by a formal [Project Charter](./PROJECT_CHARTER.md) outlining the PMP-aligned objectives and success criteria.

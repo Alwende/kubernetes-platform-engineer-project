@@ -13,9 +13,16 @@ spec:
       labels:
         app: frontend
     spec:
+      volumes:
+      - name: task-pv-storage
+        persistentVolumeClaim:
+          claimName: task-pv-claim
       containers:
       - name: nginx
         image: nginx:stable-alpine
+        volumeMounts:
+        - mountPath: "/var/log/nginx"
+          name: task-pv-storage
         resources:
           requests:
             memory: "64Mi"

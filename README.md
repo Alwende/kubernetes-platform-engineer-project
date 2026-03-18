@@ -53,3 +53,7 @@ This project follows a rigorous PMBOK-aligned governance structure. Detailed obj
 * **Incident INC-001:** Identified accidental exposure of non-production metadata.
 * **Response:** Performed a repository-wide history scrub and implemented a robust `.gitignore` strategy.
 * **Compliance:** The project now utilizes localized `.gitignore` patterns to ensure zero-leakage of sensitive YAML or JSON artifacts.
+
+## 💾 Phase 2: Persistence & Security
+* **Stateful Storage:** Implemented Persistent Volumes (PV) to ensure log retention across pod lifecycles.
+* **Secrets Management:** Migrated sensitive metadata to Kubernetes Secrets objects.

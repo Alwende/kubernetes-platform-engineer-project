@@ -41,3 +41,14 @@ The organization requires a standardized, repeatable, and secure deployment fram
 ---
 **Approved By:** __________________________  
 **Dan Alwende, PMP, CSPO**
+
+---
+
+## 8. Change & Incident Management Log
+| Date | Incident/Change ID | Description | Resolution/Mitigation | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| 2026-03-18 | INC-001 | GitGuardian: Detected Metadata Exposure | Executed Git history scrub (BFG/Filter-Branch equivalent) and force-pushed to origin. | **CLOSED** |
+| 2026-03-18 | CHG-001 | Security Hardening | Implemented .gitignore protocols to prevent future exposure of sensitive audit artifacts. | **COMPLETED** |
+
+---
+**Audit Note:** *All non-production metadata exposed was localized to the 'lfs158' lab environment and posed zero risk to enterprise production systems. Security protocols now align with CIS Kubernetes Benchmarks.*

@@ -48,3 +48,8 @@ This project follows a rigorous PMBOK-aligned governance structure. Detailed obj
 ---
 **Project Lead:** Dan Alwende, PMP, CSPO  
 *Project Manager | Solutions Architect | Platform Engineer*
+
+## 🛡️ Security Audit & Incident Response
+* **Incident INC-001:** Identified accidental exposure of non-production metadata.
+* **Response:** Performed a repository-wide history scrub and implemented a robust `.gitignore` strategy.
+* **Compliance:** The project now utilizes localized `.gitignore` patterns to ensure zero-leakage of sensitive YAML or JSON artifacts.

@@ -17,12 +17,13 @@ graph TD
 ```
 
 ## 🛠️ Key Architectural Features
-* **RBAC Governance:** Implemented a dedicated namespace (`lfs158`) with restricted user access.
-* **Multi-Container Pods:** Utilized the **Sidecar Pattern** for administrative observability.
-* **Configuration Decoupling:** Used **ConfigMaps** to ensure the infrastructure is environment-agnostic.
-* **Resource Reliability:** Defined **CPU/Memory Requests & Limits** for Burstable QoS.
+* **RBAC Governance:** Implemented a dedicated namespace (`lfs158`) with restricted user access (User: Bob).
+* **Multi-Container Pods:** Utilized the **Sidecar Pattern** by deploying an Nginx frontend with an Echo-Server admin sidecar.
+* **Service Discovery:** Configured a **Multi-Port LoadBalancer Service** (80/8080).
+* **Configuration Decoupling:** Used **ConfigMaps** to manage environment variables (SIDECAR_PORT).
+* **Resource Reliability:** Defined **CPU/Memory Requests & Limits** to achieve **Burstable QoS**.
 
-## 📋 Infrastructure Audit
+## 📋 Infrastructure Audit (Live Snapshot)
 ```json
 {
   "host": {
@@ -37,5 +38,13 @@ graph TD
 }
 ```
 
+## 🌐 Networking & Service Types
+* **LoadBalancer:** Integrated with `minikube tunnel` for external IP simulation.
+* **Port-Forwarding:** Utilized `kubectl port-forward svc/frontend-svc 8081:8080` for direct sidecar debugging.
+
 ## 🏛️ Governance
 This project is governed by a formal [Project Charter](./PROJECT_CHARTER.md) outlining the PMP-aligned objectives and success criteria.
+
+---
+**Project Lead:** Dan Alwende, PMP, CSPO  
+*Project Manager | Solutions Architect | Platform Engineer*

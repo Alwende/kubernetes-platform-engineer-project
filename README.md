@@ -43,7 +43,7 @@ graph TD
 * **Port-Forwarding:** Utilized `kubectl port-forward svc/frontend-svc 8081:8080` for direct sidecar debugging.
 
 ## 🏛️ Governance
-This project is governed by a formal [Project Charter](./PROJECT_CHARTER.md) outlining the PMP-aligned objectives and success criteria.
+This project follows a rigorous PMBOK-aligned governance structure. Detailed objectives and success criteria are documented in the [Enterprise Project Charter](./PROJECT_CHARTER.md).
 
 ---
 **Project Lead:** Dan Alwende, PMP, CSPO  

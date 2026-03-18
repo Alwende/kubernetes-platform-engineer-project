@@ -34,3 +34,17 @@ Below is a snapshot of the pod environment captured during the deployment phase:
 
 ## 🛡️ Fault Resolution
 During development, addressed a critical **EADDRINUSE (Port 80 collision)** by implementing environment-variable-driven port reassignment via ConfigMaps.
+
+## 🌐 Networking & Service Types
+This project explores the full spectrum of Kubernetes networking:
+* **ClusterIP:** Default internal communication for secure microservices.
+* **NodePort:** Exposed high-number ports for external node-level access.
+* **LoadBalancer:** Integrated with `minikube tunnel` to simulate cloud-provider external IP assignment.
+* **Port-Forwarding:** Utilized `kubectl port-forward` for direct pod debugging and bypassing the service mesh during incidents.
+
+## 🛠️ Port Forwarding Debugging Log
+Executed direct tunnel to Sidecar for administrative audit:
+```bash
+kubectl port-forward svc/frontend-svc 8081:8080 -n lfs158
+```
+*Result: Successfully accessed JSON health data on localhost:8081.*

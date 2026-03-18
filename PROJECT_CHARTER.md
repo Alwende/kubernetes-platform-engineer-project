@@ -18,5 +18,5 @@ To architect a highly available, secure, and observable containerized frontend e
 * **Risk:** Port collision between containers (Mitigated via Env-driven port reassignment).
 * **Assumption:** Infrastructure is deployed on a CNCF-compliant Kubernetes distribution (Minikube).
 
-## 5. Project Manager
-**Dan Alwende, PMP, CSPO**
+## 5. Project Lead
+**Dan Alwende, PMP, CSPO** *Project Manager | Solutions Architect | Platform Engineer*

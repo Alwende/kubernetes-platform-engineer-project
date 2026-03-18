@@ -57,3 +57,7 @@ This project follows a rigorous PMBOK-aligned governance structure. Detailed obj
 ## 💾 Phase 2: Persistence & Security
 * **Stateful Storage:** Implemented Persistent Volumes (PV) to ensure log retention across pod lifecycles.
 * **Secrets Management:** Migrated sensitive metadata to Kubernetes Secrets objects.
+
+## 🌐 Phase 3: Ingress & Domain Routing
+* **Ingress Control:** Transitioned from Port-Forwarding to DNS-based routing via Nginx Ingress.
+* **Local DNS:** Configured `frontend.local` as the primary entry point for the standalone application.

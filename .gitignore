@@ -1,0 +1,11 @@
+# Kubernetes Secrets & Audit
+*-audit.json
+*.pem
+*.key
+kube-config
+.env
+
+# Windows/IDE junk
+.vscode/
+Thumbs.db
+.DS_Store

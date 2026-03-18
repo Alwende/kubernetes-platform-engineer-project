@@ -68,3 +68,7 @@ The Ingress routing was successfully validated via internal cluster tunneling:
 minikube ssh "curl -H 'Host: frontend.local' localhost"
 ```
 **Result:** 200 OK - Nginx Welcome Page served via Ingress Controller.
+
+## 📈 Phase 3: Elasticity & Scaling
+* **Horizontal Pod Autoscaling:** Implemented HPA to automatically scale replicas (3-10) based on CPU utilization.
+* **Metrics Aggregation:** Enabled `metrics-server` for real-time resource monitoring.

@@ -1,16 +1,27 @@
-# Project Charter: Enterprise Kubernetes Platform Baseline
-**Project Manager:** Dan Alwende, PMP, CSPO
+# PROJECT CHARTER: Enterprise Kubernetes Platform (Phases 1-5)
+**Project Lead:** Dan Alwende, PMP, CSPO
 
-## 1. Executive Summary
-This project establishes a hardened, observable, and automated Kubernetes environment. It transitions a standard deployment into a high-availability Service Mesh architecture.
+## 1. Project Purpose
+To architect a highly available, secure, and observable containerized environment that aligns with enterprise deployment standards.
 
-## 2. Phase Summaries
-* **Phase 1-3 (Foundations):** Implemented RBAC isolation, Persistent Volumes (PV/PVC), and HPA Scaling.
-* **Phase 4 (Hardening):** Deployed Prometheus/Grafana (Helm), Cert-Manager (TLS), and automated PKI.
-* **Phase 5 (Traffic Engineering):** Integrated Istio Service Mesh for Canary Deployments (90/10 split) and GitHub Actions CI.
+## 2. Measurable Objectives
+* **Security:** 100% namespace isolation and Zero-Trust mTLS.
+* **Reliability:** Self-healing via Liveness probes and HPA scaling.
+* **Governance:** PMBOK-aligned incident tracking and versioned IaC.
 
-## 3. Incident Management Log
-| Date | ID | Description | Resolution |
-| :--- | :--- | :--- | :--- |
-| 2026-03-18 | INC-006 | Ingress Routing Loop | Migrated to 127.0.0.1 bridge and FQDN upstreaming. |
-| 2026-03-19 | INC-008 | Resource Bottleneck | Scaled down replicas to allow Sidecar injection. |
+## 3. Detailed Phase History
+* **Phases 1-2:** Foundation, RBAC, and Persistence (Completed).
+* **Phase 3:** Scaling and Ingress Control (Completed).
+* **Phase 4:** Monitoring and TLS Encryption (Completed).
+* **Phase 5:** Istio Service Mesh and Canary Releases (Current).
+
+## 4. Full Incident & Change Management Log
+| Date | ID | Description | Resolution | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| 2026-03-18 | INC-001 | Metadata Exposure | Scrubbed Git history and added .gitignore. | CLOSED |
+| 2026-03-18 | INC-006 | Ingress Routing Loop | Migrated to 127.0.0.1 bridge and FQDN upstreaming. | CLOSED |
+| 2026-03-19 | INC-007 | 504 Gateway Timeout | Bypassed Ingress for direct NodePort Tunneling. | CLOSED |
+| 2026-03-19 | INC-008 | Resource Bottleneck | Scaled replicas to 2 to allow sidecar injection. | CLOSED |
+
+---
+**Approval:** *Digital Signature - Dan Alwende, PMP*

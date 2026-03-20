@@ -1,38 +1,30 @@
-# PROJECT CHARTER: WAKWETU KUBERNETES MODERNIZATION
-**Project Name:** K8s-Platform-Hardening  
-**Project Manager:** Dan Alwende, PMP, CSPO  
+# PROJECT CHARTER: WAKWETU KUBERNETES MODERNIZATION (EXTENDED)
+
+**Project Name:** K8s-Platform-Hardening & Cloud Migration
+**Project Manager:** Dan Alwende, PMP, CSPO
 **Sponsor:** IT Steering Committee / Wakwetu General Stores Ltd.
 
 ## 1. PROJECT PURPOSE & JUSTIFICATION
-The current standalone container architecture at Wakwetu General Stores Ltd. lacks the scalability, security, and observability required for enterprise growth. This project is authorized to build a resilient Kubernetes-based Service Mesh to centralize governance and protect sales data integrity.
+The initial standalone container architecture lacked scalability. While Phases 1-5 established the baseline on Minikube, Phase 6 was authorized to pivot the entire platform to **Google Kubernetes Engine (GKE)** to support real-world production traffic, ensure high availability, and implement automated GitOps delivery.
 
 ## 2. HIGH-LEVEL PROJECT DESCRIPTION
-A 5-phase implementation to establish a production-grade Kubernetes cluster on a local-to-cloud transition path, incorporating advanced networking, automated security, and continuous delivery.
+A 6-phase implementation transitioning from a local laboratory (Minikube) to a production-grade GKE cluster. This includes advanced networking, automated vulnerability scanning, GitOps synchronization via ArgoCD, and strict resource governance.
 
-## 3. MEASUREABLE PROJECT OBJECTIVES & SUCCESS CRITERIA
-* **Obj 1:** Establish Namespace-level isolation and RBAC within 24 hours. (Success: Zero unauthorized access).
-* **Obj 2:** Ensure 100% data persistence for logs. (Success: PVC binding confirmed).
-* **Obj 3:** Implement Zero-Trust mTLS. (Success: Handshake verification on port 443).
+## 3. MEASURABLE OBJECTIVES & SUCCESS CRITERIA
+- **Obj 1-3:** (Achieved in Phases 1-5: RBAC, Persistence, mTLS).
+- **Obj 4 (Phase 6):** Achieve 100% automated deployment via GitOps. (Success: ArgoCD Synced).
+- **Obj 5 (Phase 6):** Enforce cloud-cost governance. (Success: ResourceQuotas active).
+- **Obj 6 (Phase 6):** Establish public edge routing. (Success: Ingress IP 35.194.3.0 reachable).
 
-## 4. HIGH-LEVEL REQUIREMENTS & SCOPE
-* **In-Scope:** RBAC, PV/PVC, HPA, Ingress, Monitoring, TLS, Service Mesh, CI/CD.
-* **Out-of-Scope:** Frontend application code refactoring; External Cloud Provider costs.
+## 4. UPDATED SCOPE
+- **In-Scope:** All previous items + GKE Cluster Management, Helm-based Observability, ArgoCD GitOps, NGINX Ingress Controller, and GCP Storage Orchestration.
 
 ## 5. SUMMARY MILESTONE SCHEDULE
-1.  **Phase 1 (Foundation):** Authorization and RBAC environment setup.
-2.  **Phase 2 (Persistence):** Storage class and volume orchestration.
-3.  **Phase 3 (Scaling):** Ingress and Auto-scaling infrastructure.
-4.  **Phase 4 (Hardening):** PKI and Observability stack integration.
-5.  **Phase 5 (Traffic Engineering):** Mesh implementation and CI/CD Go-Live.
+- **Phases 1-5:** Completed March 19, 2026.
+- **Phase 6 (The Production Pivot):** GKE Migration, GitOps implementation, and Governance lockdown. Completed March 20, 2026.
 
-## 6. PROJECT RISKS, ASSUMPTIONS, & CONSTRAINTS
-* **Risk:** Local machine resource limitations (8GB RAM) may impede Mesh performance.
-* **Assumption:** Stable Docker/Minikube environment is available.
-* **Constraint:** All infrastructure must be defined as code (IaC) and versioned.
+## 6. RISKS & CONSTRAINTS
+- **Revised Risk:** Multi-attach storage errors in GKE due to RWO volume limits. (Mitigated via HPA alignment).
+- **Constraint:** All cloud infrastructure must remain under strict ResourceQuota limits.
 
-## 7. ASSIGNED PROJECT RESOURCES & BUDGET
-* **PM/SRE:** Dan Alwende (100% Allocation).
-* **Budget:** Open-source tooling (Helm, Istio, Prometheus).
-
----
-**AUTHORIZATION:** *IT Steering Committee Approval - March 15, 2026*
+**AUTHORIZATION:** IT Steering Committee / Dan Alwende, PMP - March 20, 2026

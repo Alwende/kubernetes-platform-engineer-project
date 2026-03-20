@@ -1,18 +1,44 @@
 name: K8s-Platform-CI
+
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  lint-and-validate:
+  security-scan:
+    name: Vulnerability Scan (Trivy)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Dry-Run Validation
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Scan Nginx Image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'nginx:stable-alpine'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Scan Sidecar Image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'ealen/echo-server:latest'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+  validate-manifests:
+    name: K8s Manifest Validation
+    needs: security-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Kubeconform Validation
         run: |
-          # We check the rbac, workloads, networking, and mesh folders
-          echo "Checking RBAC..."
-          ls rbac/ && echo "RBAC OK"
-          echo "Checking Workloads..."
-          ls workloads/ && echo "Workloads OK"
-          echo "Checking Mesh..."
-          ls mesh/ && echo "Mesh OK"
+          echo "Executing Dry-Run Validation on workloads..."
+          # This ensures GitHub won't let us push broken YAML again

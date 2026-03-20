@@ -3,7 +3,7 @@
 **Status:** PRODUCTION LIVE (Verified Phase 6)
 
 ## 🏗️ Project Overview
-This repository chronicles the strategic transformation of **Wakwetu General Stores Ltd.** from a fragile, local container setup to a hardened, observable, and automated **Google Kubernetes Engine (GKE)** ecosystem. This is a full-lifecycle engineering project, demonstrating mastery of cloud-native infrastructure, GitOps delivery, and enterprise governance.
+This repository chronicles the strategic transformation of **Wakwetu General Stores Ltd.** from a fragile, local container setup to a hardened, observable, and automated **Terraform, Google Kubernetes Engine (GCP)** ecosystem. This is a full-lifecycle engineering project, demonstrating mastery of cloud-native infrastructure, GitOps delivery, and enterprise governance.
 
 ---
 
@@ -32,7 +32,7 @@ This repository chronicles the strategic transformation of **Wakwetu General Sto
 ---
 
 ## 🛠️ Technical Stack
-* **Cloud:** Google Kubernetes Engine (GKE)
+* **Cloud:** Terraform, Google Kubernetes Engine (GCP)
 * **CD/GitOps:** ArgoCD
 * **Security:** RBAC, Trivy, ResourceQuotas
 * **Mesh:** Istio v1.21.0

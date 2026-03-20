@@ -1,12 +1,18 @@
 # 🏗️ Technical Architecture: Verified Enterprise GKE Platform
 
-## 🗺️ System Flow Diagram (Phases 1-6)
+## 🗺️ System Flow Diagram (Phases 0-6)
 ```mermaid
 graph TD
     User([External User]) -->|HTTP Port 80| Ing[NGINX Ingress Controller]
     
+    subgraph Terraform_Provisioning [Infrastructure as Code Layer]
+        TF[Terraform Cloud/CLI] -->|Provisions| VPC[Custom GCP VPC/Subnets]
+        TF -->|Orchestrates| GKE_Cluster[GKE Regional Cluster]
+    end
+
     subgraph GKE_Cloud_Infrastructure [Google Kubernetes Engine - Siaya Cluster]
         direction TB
+        GKE_Cluster --- Ing
         Ing -->|Routes| Svc[Frontend Service]
         
         subgraph LFS158_Namespace [Namespace: lfs158 - Protected]
@@ -44,6 +50,7 @@ graph TD
 ```
 
 ## 🛠️ Integrated Feature Set
+0.  **Phase 0 (IaC):** **Terraform** orchestration for VPC, Subnets, and GKE Cluster state management.
 1.  **Phase 1 (Foundations):** Namespace Isolation (`lfs158`), RBAC `pod-reader` role.
 2.  **Phase 2 (Persistence):** GKE Persistent Disks (RWO) via PVCs for data durability.
 3.  **Phase 3 (Elasticity):** HPA-driven scaling (CPU 50%) aligned with storage limits.

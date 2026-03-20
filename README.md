@@ -1,63 +1,60 @@
-# 🚀 Enterprise Kubernetes Platform Engineering: Full Lifecycle Project
+# 🚀 Enterprise Kubernetes Platform: Global GKE Deployment
 **Architect:** Dan Alwende, PMP, CSPO
-**Status:** PRODUCTION LIVE (GKE)
+**Status:** PRODUCTION LIVE (Verified Phase 6)
 
 ## 🏗️ Project Overview
-This repository documents the evolution of a production-grade Kubernetes environment. We moved from a local Minikube proof-of-concept to a hardened, observable, and automated **Google Kubernetes Engine (GKE)** ecosystem.
+This repository chronicles the strategic transformation of **Wakwetu General Stores Ltd.** from a fragile, local container setup to a hardened, observable, and automated **Google Kubernetes Engine (GKE)** ecosystem. This is a full-lifecycle engineering project, demonstrating mastery of cloud-native infrastructure, GitOps delivery, and enterprise governance.
 
 ---
 
-## 🏁 Phase 1: Foundations & RBAC
-- **Namespace Isolation:** Created the `lfs158` environment.
-- **Security Governance:** Implemented RBAC for User 'Bob' with limited 'pod-reader' permissions.
-- **Workload Deployment:** Deployed a 3-replica Nginx frontend with an administrative Echo-Sidecar.
+## 🗺️ The 6-Phase Engineering Journey
 
-## 💾 Phase 2: Persistence & Configuration
-- **Stateful Storage:** Configured PV and PVC using `hostPath` for initial log retention.
-- **Secrets Management:** Migrated sensitive credentials to Kubernetes Secrets.
-- **Decoupled Config:** Utilized ConfigMaps for environment-variable driven port management.
+### 🏁 Phase 1-2: Foundations & Persistent State
+* **The Problem:** Ephemeral data and lack of security boundaries.
+* **The Solution:** Established `lfs158` namespace isolation with strict **RBAC (Role-Based Access Control)**. Migrated from local storage to **GCP Persistent Disks (RWO)**, ensuring sales data survives pod restarts.
 
-## 📈 Phase 3: Scaling & Ingress
-- **Elasticity:** Enabled `metrics-server` and implemented HPA targeting 50% CPU.
-- **Traffic Routing:** Deployed Nginx Ingress Controller for initial local domain traffic management.
+### 📈 Phase 3-4: Elasticity & Security Hardening
+* **The Problem:** Manual scaling and unknown vulnerabilities.
+* **The Solution:** Implemented **Horizontal Pod Autoscaling (HPA)** based on real-time CPU metrics. Integrated **Trivy Vulnerability Scanning** into the CI pipeline to ensure zero "Critical" CVEs reach production.
 
-## 🔒 Phase 4: Hardening & Observability
-- **Observability Stack:** Installed Prometheus & Grafana via Helm for real-time telemetry.
-- **Automated PKI:** Deployed Cert-Manager with a self-signed ClusterIssuer for SSL/TLS.
-- **Secure Edge:** Forced HTTPS termination on Port 443 for all ingress points.
+### 🕸️ Phase 5: Service Mesh & Traffic Engineering
+* **The Problem:** Blind "all-or-nothing" deployments.
+* **The Solution:** Deployed **Istio Service Mesh**. Developed **Canary Deployment** logic allowing 90/10 traffic shifting between versions, significantly reducing the blast radius of new releases.
 
-## 🕸️ Phase 5: Service Mesh & Canary
-- **Istio Integration:** Implemented Istio v1.21.0 with sidecar injection.
-- **Traffic Engineering:** Configured VirtualServices for 90/10 Canary traffic shifting.
-- **CI/CD:** Integrated GitHub Actions to automate manifest validation.
+### 🚀 Phase 6: The Production Pivot (GitOps & Governance)
+**The Ultimate Goal:** Shifting from a developer lab to an automated Enterprise Platform.
+
+1.  **GitOps with ArgoCD:** Eliminated "Configuration Drift" by establishing a Pull-based delivery model. The cluster now synchronizes automatically with this repository.
+2.  **Public Edge Routing:** Established the **NGINX Ingress Controller** at Static IP **35.194.3.0**, providing a professional entry point for external traffic.
+3.  **Enterprise Guardrails:** Implemented **ResourceQuotas** (2 CPU / 2Gi RAM) and **LimitRanges** to prevent runaway cloud costs and ensure node stability.
+4.  **Advanced Observability:** Deployed a full **Prometheus & Grafana** stack to provide a "Single Pane of Glass" view into cluster health.
 
 ---
 
-## 🚀 Phase 6: The Production Pivot (Cloud & GitOps)
-**The Challenge:** Moving from a single-node local lab to a multi-node **GKE Cluster** introduced real-world complexities: storage locks, public routing, and resource contention.
+## 🛠️ Technical Stack
+* **Cloud:** Google Kubernetes Engine (GKE)
+* **CD/GitOps:** ArgoCD
+* **Security:** RBAC, Trivy, ResourceQuotas
+* **Mesh:** Istio v1.21.0
+* **Monitoring:** Prometheus & Grafana
+* **Edge:** NGINX Ingress
 
-### 1. Cloud Infrastructure & Storage Orchestration
-We provisioned a 3-node GKE cluster. We faced a critical **Multi-Attach Error** where the GCP Persistent Disk (RWO) could not be shared across scaling pods.
-- **Resolution:** We aligned the **Horizontal Pod Autoscaler (HPA)** with storage physics and implemented a force-clear protocol to reset volume locks during deployment.
+---
 
-### 2. GitOps Delivery via ArgoCD
-We moved away from manual `kubectl` commands. We installed **ArgoCD** to enforce a "Source of Truth" model.
-- **Implementation:** The cluster now automatically polls this GitHub repo. Any change to the `workloads/` folder is instantly synchronized, ensuring the cluster state never drifts from the code.
+## 🚦 Quick Start & Verification
 
-### 3. Edge Routing & Ingress Management
-We deployed a production-grade **NGINX Ingress Controller** via Helm.
-- **Public Entry:** Assigned Static IP **35.194.3.0**.
-- **Handshake:** Configured Ingress rules to route public traffic to the `frontend-service`, verified via browser access.
+### 1. Access the Application
+The platform is live and load-balanced at the following endpoint:
+* **Production URL:** http://35.194.3.0
 
-### 4. Enterprise Governance (Guardrails)
-To prevent "Runaway Costs" in the cloud, we implemented:
-- **ResourceQuotas:** Hard caps on the `lfs158` namespace (Max 2 CPU / 2Gi RAM).
-- **LimitRanges:** Mandatory default requests for all new containers to ensure node stability.
+### 2. View Cluster Health (Grafana)
+To view the real-time telemetry, initiate a port-forward and visit `localhost:3000`:
+```bash
+kubectl port-forward deployment/prometheus-grafana -n monitoring 3000:3000
+```
 
-### 5. Advanced Monitoring
-The Prometheus/Grafana stack was upgraded to monitor GKE-specific metrics, giving us a "Single Pane of Glass" view into cluster-wide resource consumption.
+### 3. GitOps Synchronization
+Monitor the state of the infrastructure via the ArgoCD UI. All manifests in the `workloads/` directory are automatically synced to the `lfs158` namespace.
 
-## ✅ Final Production Verification
-- **External Access:** http://35.194.3.0 -> **HTTP 200 OK**
-- **GitOps Status:** ArgoCD -> **Healthy & Synced**
-- **Security:** Trivy Scanning -> **Passed**
+---
+**Verified by Dan Alwende, PMP (March 20, 2026)**

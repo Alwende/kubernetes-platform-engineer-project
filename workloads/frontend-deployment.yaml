@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:stable-alpine
+        image: nginx:1.27.0-alpine3.20
         ports:
         - containerPort: 80
         volumeMounts:
@@ -25,7 +25,7 @@ spec:
           mountPath: /var/log/nginx
           subPath: nginx
       - name: admin-sidecar
-        image: ealen/echo-server
+        image: ealen/echo-server:0.9.2
         ports:
         - containerPort: 8080
         env:

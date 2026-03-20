@@ -16,18 +16,22 @@ spec:
       volumes:
       - name: task-pv-storage
         persistentVolumeClaim:
+        subPath: nginx
           claimName: task-pv-claim
       containers:
       - name: nginx
         image: nginx:stable-alpine
+        subPath: sidecar
         volumeMounts:
         - mountPath: "/var/log/nginx"
           name: task-pv-storage
         resources:
+        subPath: nginx
           requests:
             memory: "64Mi"
             cpu: "250m"
           limits:
+        subPath: sidecar
             memory: "128Mi"
             cpu: "500m"
         ports:

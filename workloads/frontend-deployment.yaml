@@ -30,10 +30,7 @@ spec:
         - containerPort: 8080
         env:
         - name: PORT
-          valueFrom:
-            configMapKeyRef:
-              name: sidecar-config
-              key: SIDECAR_PORT
+          value: "8080"
         volumeMounts:
         - name: task-pv-storage
           mountPath: /var/log/nginx
